@@ -6,11 +6,11 @@ public class Solution {
       return false;
     }
     else{
-      int temp = x;
+      int tem = x;
       int y=0;
-      while(temp != 0){
-        y = y*10 + temp%10;
-        temp = temp/10;
+      while(tem != 0){
+        y = y*10 + tem%10;
+        tem = tem/10;
       }
       if(y == x){
         return true;
