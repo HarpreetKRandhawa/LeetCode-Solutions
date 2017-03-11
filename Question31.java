@@ -8,14 +8,15 @@ public class Solution {
         }
         int p1=0,p2=0;
         for(int i = nums.length-2; i>= 0; i--){
-            if(nums[i] > nums[i+1]){
+            if(nums[i] < nums[i+1]){
                 p1 = i;
                 break;
             }
         }
-        for(int i = nums.length-1; i>= 0; i--){
+        for(int i = nums.length-1; i> p1; i--){
             if(nums[i] > nums[p1]){
-                p2 = nums[i];
+                p2 = i;
+                break;
             }
         }
         if(p1 == 0 && p2 == 0){
