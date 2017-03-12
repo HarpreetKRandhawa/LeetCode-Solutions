@@ -9,16 +9,11 @@ public class Solution {
             return 0;
         }
         Arrays.sort(nums);
-        int left = 0, right = nums.length;
-        while(left<right){
-            int mid = (left+right)/2;
-            if(nums[mid]>mid){
-                right = mid;
-            }
-            else{
-                left = mid+1;
-            }
+        int i=0;
+        for(i=0;i<nums.length;i++){
+            if(nums[i]!=i)
+                return i;
         }
-        return right;
+        return i;
     }
 }
