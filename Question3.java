@@ -5,7 +5,6 @@
 //Given "abcabcbb", the answer is "abc", which the length is 3.
 
 //Given "bbbbb", the answer is "b", with the length of 1.
-
 public class Solution {
   public int lengthOfLongestSubstring(String s) {
     int max = 0, start = 0, i = 0;
