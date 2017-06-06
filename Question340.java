@@ -1,7 +1,7 @@
 public class Solution {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         
-        if(s.length() == 0 || s == null || k > s.length()-1 || k < 0)
+        if(s.length() == 0 || s == null || k < 0)
             return 0;
         if(s.length() < k)
             return s.length();
