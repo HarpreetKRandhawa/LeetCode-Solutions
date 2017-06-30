@@ -30,6 +30,8 @@ public class Solution {
             if(arr[j].size()>0){
                 for(int a: arr[j]){
                     elements.add(a);
+                    if(elements.size() == k)
+                        break;
                 }
             }
             if(elements.size() == k){
