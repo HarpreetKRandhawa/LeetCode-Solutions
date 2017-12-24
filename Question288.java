@@ -1,7 +1,7 @@
 class ValidWordAbbr {
-    HashMap<String,String> map = new HashMap<String,String>();
+    HashMap<String,String> map;
     public ValidWordAbbr(String[] dictionary) {
-        
+        map = = new HashMap<String,String>();
         for(int i=0; i<dictionary.length; i++){
             if(dictionary[i].length() < 3)
                 continue;
