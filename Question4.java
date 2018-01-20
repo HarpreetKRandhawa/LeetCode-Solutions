@@ -1,25 +1,35 @@
-//There are two sorted arrays nums1 and nums2 of size m and n respectively.
-//Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
-
-public class Solution {
+class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] arr = new int[nums1.length+nums2.length];
-        int i=0, j=0, k=0;
-        while(i<nums1.length &&j < nums2.length){
-            arr[k++] = nums1[i] < nums2[j] ? nums1[i++] : nums2[j++];
+        //Get lengths of arrays
+        
+        int l1 = nums1.length;
+        int l2 = nums2.length;
+        if(l1 > l2){
+            return findMedianSortedArrays(nums2,nums1);
         }
-        while(i<nums1.length){
-            arr[k++] = nums1[i++];
+        int start = 0, end = l1;
+        while(start <= end){
+            int part_X = (end+start)/2;
+            int part_Y = (l1+l2+1)/2 - part_X;
+            
+            int maxLeftX = part_X == 0 ? Integer.MIN_VALUE:nums1[part_X-1];
+            int minRightX = part_X == l1 ? Integer.MAX_VALUE: nums1[part_X];
+            
+            int maxLeftY = part_Y == 0 ? Integer.MIN_VALUE:nums2[part_Y-1];
+            int minRightY = part_Y == l2 ? Integer.MAX_VALUE: nums2[part_Y];
+            
+            if(maxLeftX <= minRightY && maxLeftY <= minRightX){
+                if((l1+l2)%2 == 0)
+                    return ((double)Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY))/2.0;
+                else
+                    return (double)Math.max(maxLeftX,maxLeftY);
+            }
+            else if(maxLeftX > minRightY)
+                end = part_X-1;
+            else 
+                start = part_X+1;
+                
         }
-        while(j<nums2.length){
-            arr[k++] = nums2[j++];
-        }
-        double median = 0.0;
-        if(k%2 == 0){
-            return (arr[k/2]+arr[k/2-1])/2.0;
-        }
-        else{
-            return (arr[k/2]);
-        }
+        throw new IllegalArgumentException();
     }
 }
