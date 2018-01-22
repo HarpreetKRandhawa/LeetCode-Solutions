@@ -6,40 +6,37 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+/*Approach I: Reverse -> Add 1-> Reverse */
+class Solution {
     public ListNode plusOne(ListNode head) {
-        ListNode h2 = reverse(head);
-        
-        ListNode node = h2;
-        while(node != null){
-            if(node.val + 1 <= 9){
-                node.val = (node.val+1);
-                break;
-            }
-            else{
-                node.val = 0;
-                if(node.next == null){
-                    node.next = new ListNode(1);
-                    break;
-                }
-                node = node.next;
-            }
+        if(head == null)
+            return null;
+        ListNode curr =reverse(head);
+        //Add 1
+        int carry = 1;
+        ListNode temp = curr;
+        curr.val += 1;
+        while(curr.next != null && curr.val > 9){
+            curr.val = 0;
+            curr.next.val += 1;
+            curr = curr.next;
         }
-        return reverse(h2);
+        if(curr.val > 9){
+            curr.val = 0;
+            ListNode newNode = new ListNode(1);
+            curr.next = newNode;
+        }
+        ListNode node = reverse(temp);
+        return node;
     }
-    
-    public ListNode reverse(ListNode h){
-        if(h == null || h.next == null)
-            return h;
-        ListNode l1 = h;
-        ListNode l2 = h.next;
-        while(l2 != null){
-            ListNode l3 = l2.next;
-            l2.next = l1;
-            l1 = l2;
-            l2 = l3;
+    public ListNode reverse(ListNode head){
+        ListNode newHead = null;
+        while(head != null){
+            ListNode next = head.next;
+            head.next = newHead;
+            newHead = head;
+            head = next;
         }
-        h.next = null;
-        return l1;
+        return newHead;
     }
 }
