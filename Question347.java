@@ -1,43 +1,27 @@
-public class Solution {
+class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
-        List<Integer> elements = new ArrayList<>();
-        if(nums == null || nums.length == 0){
-            return elements;
+        List<Integer> lst = new ArrayList<Integer>();
+        //Using PriorityQueue
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i: nums){
+            map.put(i,map.getOrDefault(i,0)+1);
         }
-        HashMap<Integer, Integer> map = new HashMap<Integer,Integer>();
-        for(int i=0; i<nums.length; i++){
-            if(map.containsKey(nums[i])){
-                map.put(nums[i],map.get(nums[i])+1);
-            }
-            else{
-                map.put(nums[i],1);
-            }
-        }
-        int max = 0;
-        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
-            max = Math.max(max,entry.getValue());
-        }
-        ArrayList<Integer>[] arr = (ArrayList<Integer>[]) new ArrayList[max+1];
-        for(int i=1; i<=max; i++){
-            arr[i]=new ArrayList<Integer>();
-        }
-        for(Map.Entry<Integer, Integer> entry: map.entrySet()){
-            int count = entry.getValue();
-            int number = entry.getKey();
-            arr[count].add(number);
-        }
-        for(int j=max; j>=1; j--){
-            if(arr[j].size()>0){
-                for(int a: arr[j]){
-                    elements.add(a);
-                    if(elements.size() == k)
-                        break;
+        
+        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>(
+            new Comparator<Map.Entry<Integer,Integer>>(){
+                @Override
+                public int compare(Map.Entry<Integer,Integer> a, Map.Entry<Integer,Integer> b){
+                    return b.getValue()-a.getValue();
                 }
             }
-            if(elements.size() == k){
-                break;
-            }
+        );
+        
+        pq.addAll(map.entrySet());
+        while(k > 0){
+            Map.Entry<Integer,Integer> e = pq.poll();
+            lst.add(e.getKey());
+            k = k-1;   
         }
-        return elements;
+        return lst;
     }
 }
