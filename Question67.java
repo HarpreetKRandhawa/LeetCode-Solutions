@@ -1,40 +1,32 @@
 class Solution {
     public String addBinary(String a, String b) {
-        if(a.length() == 0)
+        
+        if(a.length() == 0 || a == null)
             return b;
-        else if(b.length() == 0)
+        else if(b.length() == 0 || b == null)
             return a;
-        int maxLen = a.length()>b.length()?a.length():b.length();
-        String big = a, small = b;
-        StringBuffer res = new StringBuffer();
-        if(maxLen != big.length()){
-            big = b;
-            small = a;
-        }
-        int sum=0, carry=0;
-        int i=big.length()-1,j=small.length()-1;
-        while(i>=0 || j>=0){
-            sum = carry;
-            if(i>=0){
-                sum += big.charAt(i)-'0';
-                i--;
-            }
-            if(j >= 0){
-                sum += small.charAt(j)-'0';
-                j--;
-            }
-            if(sum > 1){
-                carry = 1;
-                sum = sum%2;
-                res.insert(0,""+sum);
+        
+        StringBuilder sb = new StringBuilder();
+        int i=a.length()-1, j=b.length()-1, carry=0, c1, c2;
+        while(i >= 0 || j >= 0){
+            if(i >= 0)
+                c1 = a.charAt(i--) == '1' ? 1:0;
+            else
+                c1 = 0;
+            if(j >= 0)
+                c2 = b.charAt(j--) == '1' ? 1:0;
+            else 
+                c2 = 0;
+            int ans = c1+c2+carry;
+            if(ans%2 == 0){
+                sb.append('0');
             }
             else{
-                carry = 0;
-                res.insert(0,sum);
+                sb.append('1');
             }
+            carry = ans>=2?1:0;
         }
-        if(carry == 1)
-            res.insert(0,"1");
-        return res.toString();
+        if(carry == 1) sb.append('1');
+        return sb.reverse().toString();
     }
 }
